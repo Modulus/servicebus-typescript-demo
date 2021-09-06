@@ -1,0 +1,39 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: Tags
+
+on:
+  push:
+    tags:
+      - "[0-9].[0-9].[0-9]"
+  pull_request:
+    tags: 
+      - "[0-9].[0-9].[0-9]"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  package:
+    runs-on: ubuntu-latest    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set vars
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}         
+      - name: login
+        uses: docker/login-action@v1
+        with: 
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+      - name: Docker build producer
+        run: docker build -t ghcr.io/modulus/servicebus-typescript-demo-producer:${{ steps.vars.outputs.tag }} -f Dockerfile.sender .
+      - name: Docker push
+        run: docker push ghcr.io/modulus/servicebus-typescript-demo-producer:${{ steps.vars.outputs.tag }}
+      - name: Docker build receiver
+        run: docker build -t ghcr.io/modulus/servicebus-typescript-demo-receiver:${{ steps.vars.outputs.tag }} -f Dockerfile.receiver .
+      - name: Push reveiver container
+        run: docker push ghcr.io/modulus/servicebus-typescript-demo-receiver:${{ steps.vars.outputs.tag }} 
+
+        
