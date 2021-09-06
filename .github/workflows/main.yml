@@ -25,10 +25,12 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
       - name: Docker build producer
-        run: docker build -t ghcr.io/modulus/servicehub-typescript-demo-producer:latest -f Dockerfile.sender .
+        run: docker build -t ghcr.io/modulus/servicebus-typescript-demo-producer:latest -f Dockerfile.sender .
       - name: Docker push
-        run: docker push ghcr.io/modulus/servicehub-typescript-demo-producer:latest
+        run: docker push ghcr.io/modulus/servicebus-typescript-demo-producer:latest
       - name: Docker build receiver
-        run: docker build -t ghcr.io/modulus/servicehub-typescript-demo-receiver:latest -f Dockerfile.receiver .
+        run: docker build -t ghcr.io/modulus/servicebus-typescript-demo-receiver:latest -f Dockerfile.receiver .
       - name: Push reveiver container
-        run: docker push ghcr.io/modulus/servicehub-typescript-demo-receiver:latest 
+        run: docker push ghcr.io/modulus/servicebus-typescript-demo-receiver:latest 
+
+        
