@@ -36,7 +36,8 @@ async function main() {
             await serviceBusClient.close()
         }
         catch(error){
-            console.error("Failed to sned message: "+ error)
+            console.error("Failed to receive message: "+ error)
+            process.exit(1);
         }finally{
             await receiver.close()
             await serviceBusClient.close()

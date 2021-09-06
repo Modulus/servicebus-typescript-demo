@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer
+spec:
+  selector:
+    matchLabels:
+      app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+      - name: producer
+        image: ghcr.io/modulus/servicebus-typescript-demo-producer:0.0.1
+        resources:
+          requests:
+            memory: 64Mi
+            cpu: 128m
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: SERVER
+            value: "Endpoint=sb://non-exsiting-hub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YourKeyHerePlease"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: ghcr.io/modulus/servicebus-typescript-demo-receiver:0.0.1
+        resources:
+          requests:
+            memory: 64Mi
+            cpu: 128m          
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: SERVER
+            value: "Endpoint=sb://non-exsiting-hub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YourKeyHerePlease"            
+
+      
