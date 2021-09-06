@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: producer
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: producer
@@ -13,7 +14,7 @@ spec:
     spec:
       containers:
       - name: producer
-        image: ghcr.io/modulus/servicebus-typescript-demo-producer:0.0.1
+        image: ghcr.io/modulus/servicebus-typescript-demo-producer:0.0.2
         resources:
           requests:
             memory: 64Mi
@@ -30,6 +31,7 @@ kind: Deployment
 metadata:
   name: consumer
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: consumer
@@ -40,7 +42,7 @@ spec:
     spec:
       containers:
       - name: consumer
-        image: ghcr.io/modulus/servicebus-typescript-demo-receiver:0.0.1
+        image: ghcr.io/modulus/servicebus-typescript-demo-receiver:0.0.2
         resources:
           requests:
             memory: 64Mi
