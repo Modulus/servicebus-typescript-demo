@@ -24,7 +24,10 @@ spec:
             cpu: "500m"
         env:
           - name: SERVER
-            value: "Endpoint=sb://non-exsiting-hub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YourKeyHerePlease"
+            valueFrom:
+              secretKeyRef:
+                name: mq-secrets
+                key: CONNECTION_STRING
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -52,6 +55,9 @@ spec:
             cpu: "500m"
         env:
           - name: SERVER
-            value: "Endpoint=sb://non-exsiting-hub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YourKeyHerePlease"            
+            valueFrom:
+              secretKeyRef:
+                name: mq-secrets
+                key: CONNECTION_STRING     
 
       
