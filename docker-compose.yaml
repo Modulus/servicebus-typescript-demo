@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  sender:
+    build:
+      context: ./
+      dockerfile: Dockerfile.sender
+    restart: always
+    environment: 
+      SERVER: "Endpoint=sb://non-exsiting-hub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YourKeyHerePlease"
+    networks:
+      - service-hub-demo    
+  receiver:
+    build:
+      context: ./
+      dockerfile: Dockerfile.receiver
+    restart: always
+    environment: 
+      SERVER: "Endpoint=sb://non-exsiting-hub.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=YourKeyHerePlease"
+    networks:
+      - service-hub-demo          
+networks:
+  service-hub-demo:
+    driver: bridge

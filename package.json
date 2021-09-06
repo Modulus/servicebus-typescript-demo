@@ -1,0 +1,20 @@
+{
+  "name": "servicebus-ts-demo-sender",
+  "version": "1.0.0",
+  "description": "azure service bus typescript demo app",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/service-bus": "^7.3.0",
+    "axios": "^0.21.1",
+    "typescript": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.10",
+    "ts-node": "^10.2.1"
+  }
+}
